@@ -1,0 +1,5 @@
+.ch-editor-frame{
+    max-height: 80vh!important;
+    height: 80vh!important;
+    position: static;
+}

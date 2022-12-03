@@ -1,0 +1,212 @@
+import image1 from "./image/1.jpg";
+import image2 from "./image/2.jpg";
+import image3 from "./image/3.jpg";
+import image4 from "./image/4.jpg";
+import image5 from "./image/5.jpg";
+import Text from "./text.jsx";
+
+# Docs feature
+
+## 书籍及文档的问题
+
+<div>
+    <img src={image1.src} width="50%"/>
+    <img src={image2.src} width="50%"/>
+</div>
+--- 
+## 问题2
+<div>
+    <img src={image3.src} width="50%"/>
+    <br/>
+    <img src={image4.src} width="50%"/>
+        <br/>
+    <img src={image5.src} width="50%"/>
+</div>
+---
+## build-your-own-react
+> < https://pomb.us/build-your-own-react >
+---
+## MDX
+
+MDX 是一种书写格式，允许你在 Markdown 文档中无缝地插入 JSX 代码。 你还可以导入（import）组件，例如交互式图表或弹框，并将它们 嵌入到内容当中。 这使得用组件编写较长的内容形成了 一场冲击 🚀。
+
+<div style={{display:"flex"}}>
+<div style={{width:"50%"}}>
+
+# Hello word
+
+## this is a demo
+
+<div>
+    <h4> name </h4>
+    <Text />
+</div>
+    </div>
+<div style={{width:"50%"}}>
+
+<CH.Code>
+
+```mdx index.mdx
+import Text from "./text.jsx";
+
+# Hello word
+
+## this is a demo
+
+<div>
+    <h4> name </h4>
+    <Text />
+<div>
+```
+
+```jsx text.jsx
+const Text = function () {
+  const name = "herry";
+  return <div>{name} </div>;
+};
+
+export default Text;
+```
+
+</CH.Code>
+    </div>
+</div>
+
+---
+
+# 安装 nextjs demo
+
+<CH.Scrollycoding >
+
+## 安装
+
+安装 next 及插件
+
+```bash
+npm install next react react-dom
+npm install @next/mdx @mdx-js/loader @code-hike/mdx
+
+```
+
+---
+
+## 创建一个 next.config.js
+
+> 在项目根目录创建一个 next.config.js 文件
+
+> 我们引入`@next/mdx`插件来解析 mdx 文件
+
+> 使用`withMDX`方法来配置 mdx 插件
+
+> 通过`pageExtensions`来指定我们的 mdx 文件后缀
+
+```js next.config.js
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+  },
+});
+
+module.exports = withMDX({
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+});
+```
+
+---
+
+## 设置 codehike
+
+> 设置`@code-hike/mdx`插件，然后添加`remarkPlugins`配置到`next.config.js`文件中
+
+> 这里哦们也可以设置主题颜色，这里使用了官方的 shiki 主题，当然你也可以使用自定义的主题
+
+> 更多主题和插件 https://codehike.org/docs/configuration
+
+```js next.config.js focus=1[10:15],3,8
+const theme = require("shiki/themes/nord.json");
+const { remarkCodeHike } = require("@code-hike/mdx");
+
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [[remarkCodeHike, { theme }]],
+  },
+});
+
+module.exports = withMDX({
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+});
+```
+
+---
+
+## 创建\_app.js
+
+> 创建一个 pages/\_app.js 文件
+
+> 在 nextjs 的环境中，使用`_app.js`来自定义应用的全局样式
+
+```js app.js
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+```
+
+---
+
+## 引用 codehike
+
+> 导入 code hik 的样式
+
+>
+
+```js app.js focus=1,2
+import "@code-hike/mdx/dist/index.css";
+
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+```
+
+---
+
+## 创建 index.mdx
+
+> 创建 mdx 文件
+> 在 pacakge.json 中添加 script
+
+```mdx pages/index.mdx
+# Hello
+
+Lorem ipsum dolor sit amet.
+```
+
+---
+
+## 添加 启动命令
+
+```json package.json  focus=6:8
+{
+  "name": "codehike",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "@code-hike/mdx": "^0.7.4",
+    "@mdx-js/loader": "^2.1.5",
+    "@next/mdx": "^13.0.0",
+    "next": "^13.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+```
+
+</CH.Scrollycoding>
